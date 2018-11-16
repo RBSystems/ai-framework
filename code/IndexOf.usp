@@ -1,0 +1,130 @@
+/*
+ * Avidex Industries, LLC
+ * www.avidexav.com
+ */
+
+#SYMBOL_NAME "IndexOf"
+#CATEGORY "46" "AI Framework" // Custom
+#DEFAULT_VOLATILE
+#ENABLE_DYNAMIC
+//#ENABLE_TRACE
+
+
+// Constants
+
+#DEFINE_CONSTANT #ELEMENT_LEN   16
+#DEFINE_CONSTANT #ELEMENTS_SIZE 33
+
+#DEFINE_CONSTANT #SEARCH_EQUAL 0x0A
+#DEFINE_CONSTANT #SEARCH_MATCH 0x0B
+#DEFINE_CONSTANT #NULL_STRING 0x00
+
+
+// Inputs and Outputs
+
+STRING_INPUT Search$[#ELEMENT_LEN], Elements[#ELEMENTS_SIZE,#ELEMENTS_SIZE][#ELEMENT_LEN];
+
+DIGITAL_OUTPUT Found_First, Found_Other;
+ANALOG_OUTPUT  Index;
+STRING_OUTPUT  Index$;
+
+INTEGER_PARAMETER Search_Type;
+
+	#BEGIN_PARAMETER_PROPERTIES Search_Type
+
+		propValidUnits = unitHex;
+		// propList = { 0xA, "Equal ==" }, { 0xB, "Match =~" }; TODO: 2012-03-02 shows "10h" and "11h" in SIMPL
+
+	#END_PARAMETER_PROPERTIES
+/*
+STRING_PARAMETER Elements[#ELEMENTS_SIZE][#ELEMENT_LEN];
+
+	#BEGIN_PARAMETER_PROPERTIES Elements
+
+		propValidUnits = unitString;
+
+	#END_PARAMETER_PROPERTIES
+*/
+
+// Events
+
+CHANGE Search$
+{
+    STRING __Search_String__[#ELEMENT_LEN];
+    INTEGER i;
+
+    __Search_String__ = Search$;
+    TRACE("__Search_String__ = %d\n", atoi(__Search_String__));
+    
+	IF(__Search_String__ = CHR(0))
+    {
+		TRACE("\nDEBUG: Going the terminate Search$ Change Event\n");
+        TERMINATEEVENT;
+    }
+    
+	IF(__Search_String__ != CHR(0))
+	{
+		CSWITCH(Search_Type)
+		{
+			CASE(#SEARCH_EQUAL):
+			{
+	    		FOR(i = 1 TO #ELEMENTS_SIZE)
+	            {
+					IF(Elements[i] = __Search_String__)
+					{
+						IF(i = 1)
+	                    {
+	                        Found_First = 1;
+	                    }
+	                    ELSE
+	                    {
+	                        Found_Other = 1;
+	                    }
+	
+	                    Index  = i - 1;
+	                    Index$ = CHR(Index);
+	                    PROCESSLOGIC();
+	
+	                    Found_First = 0;
+	                    Found_Other = 0;
+						TERMINATEEVENT;
+					}
+	            }
+	
+				BREAK;
+			}
+			CASE(#SEARCH_MATCH):
+			{
+				TRACE("\nDEBUG: __Search_String__ = <%d> \n", ATOI(__Search_String__));
+				FOR(i = 1 TO #ELEMENTS_SIZE)
+	            {
+					IF(FIND(__Search_String__, Elements[i]) > 0)
+	        		{
+	            		IF(i = 1)
+	                    {
+							TRACE("\nDEBUG: Found First!!!\n");
+	                        Found_First = 1;
+	                    }
+	                    ELSE
+	                    {
+							TRACE("DEBUG: Elements[%d] = <%s>\n", i, Elements[i]);
+	                        Found_Other = 1;
+	                    }
+	
+	                    Index  = i - 1;
+	                    Index$ = CHR(Index);
+	                    PROCESSLOGIC();
+	
+	                    Found_First = 0;
+	                    Found_Other = 0;
+						TERMINATEEVENT;
+	        		}
+	            }
+	
+	            Found_First = 0;
+	            Found_Other = 0;
+				BREAK;
+			}
+	    }
+	}
+}

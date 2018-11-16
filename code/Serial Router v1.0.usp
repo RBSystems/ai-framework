@@ -1,0 +1,97 @@
+                                                                                         /*
+ * Avidex Industries, LLC
+ * www.avidexav.com
+ */
+
+#SYMBOL_NAME "Serial Router"
+#CATEGORY "46" "AI Framework" // Custom
+#DEFAULT_VOLATILE
+#ENABLE_DYNAMIC
+//#ENABLE_TRACE
+
+
+// Constants
+
+#DEFINE_CONSTANT #ELEMENT_LEN   32
+#DEFINE_CONSTANT #ELEMENTS_SIZE 16
+
+// Inputs and Outputs
+DIGITAL_INPUT Initialize;
+ANALOG_INPUT Input_Number, Output_Number;
+DIGITAL_INPUT Take, Clear_All_Outputs;
+STRING_INPUT Element_Name_Is[#ELEMENTS_SIZE][#ELEMENT_LEN];
+
+STRING_OUTPUT Output_Name$[#ELEMENTS_SIZE];
+
+
+//Functions
+
+STRING  __Elements__[#ELEMENTS_SIZE][#ELEMENT_LEN];
+INTEGER item;
+
+FUNCTION ClearAllOutputs()
+{
+    FOR(item = 1 TO #ELEMENTS_SIZE)
+    {
+        Output_Name$[item] = CHR(0);
+		//Item_Name_Is[item] = Device_Name_Is[device];
+    }	
+}
+
+
+//Events
+
+INTEGER nInputNumber, nOutputNumber;
+CHANGE Input_Number
+{
+	nInputNumber = Input_Number;
+	//print("\nnInputNumber = %d\n",nInputNumber);
+}
+
+CHANGE Output_Number
+{
+	nOutputNumber = Output_Number;
+	//print("\nnOutputNumber = %d\n",nOutputNumber);
+}
+
+PUSH Take
+{
+	IF(nInputNumber = 0)
+	{
+		Output_Name$[nOutputNumber] = "";
+	}
+	ELSE
+	{
+     	Output_Name$[nOutputNumber] = Element_Name_Is[nInputNumber];
+	}
+    //print("Element_Name_Is[%d] = %s\n", nInputNumber ,Element_Name_Is[nInputNumber]);
+	//MAKESTRING(Output_Name$[nOutputNumber], "%s", __Elements__[nInputNumber]);
+}
+
+PUSH Clear_All_Outputs
+{
+	ClearAllOutputs();
+}
+
+// Initialization
+
+FUNCTION __Init__()
+{
+    SETARRAY(__Elements__, "");
+
+    ClearAllOutputs();
+}
+
+PUSH Initialize
+{
+    __Init__();
+}
+
+
+// Runtime
+
+FUNCTION Main()
+{
+    WAITFORINITIALIZATIONCOMPLETE();
+}
+
