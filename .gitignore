@@ -1,15 +1,15 @@
 **/releases
-.ASV
+*.ASV
 *.zip
-sgd
-lpz
-sig
-sm2
-smft
-smw
+*.sgd
+*.lpz
+*.sig
+*.sm2
+*.smft
+*.smw
 !ai-framework.smw
-vtp
-vtz
-hash
-ced
+*.vtp
+*.vtz
+*.hash
+*.ced
 
