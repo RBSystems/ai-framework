@@ -21,7 +21,7 @@
   SmplCName=IndexOf.usp
   Code=1
   SysRev5=4.000
-  SMWRev=2.02.05
+  SMWRev=2.02.00
   OutputCue1=Found_First
   OutputSigType1=Digital
   OutputCue2=Found_Other

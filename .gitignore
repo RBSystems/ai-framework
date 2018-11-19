@@ -1,5 +1,6 @@
 **/releases
 *.ASV
+*.umc.ASV
 *.zip
 *.sgd
 *.lpz
@@ -12,4 +13,4 @@
 *.vtz
 *.hash
 *.ced
-
+**/SPIsWork
