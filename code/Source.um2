@@ -69,8 +69,7 @@ MinVariableOutputs=0
 MinVariableOutputsList2=0
 MinVariableOutputsList3=0
 MinVariableParams=0
-SymbolTree=46
-UserSymTreeName=AI Framework
+SymbolTree=32
 InputSigType1=Digital|Analog|Serial|String
 InputSigType2=Digital
 InputSigType3=Digital
@@ -5144,7 +5143,7 @@ I1=1
 I2=6
 mO=2
 tO=2
-O1=16
+O1=10
 mP=1
 P1=1d
 ]
@@ -6284,8 +6283,6 @@ O306=2193
 O307=2194
 O308=2195
 O309=2196
-O378=57
-O379=28
 O1020=5
 O1131=333
 O1132=334
@@ -6315,7 +6312,7 @@ mI=3
 I1=6
 mO=2
 tO=2
-O1=654
+O1=9
 mP=1
 P1=1d
 ]
@@ -6432,6 +6429,16 @@ SgTp=31
 ]
 [
 ObjTp=Sg
+H=9
+Nm=//__S__Source_In_Use!
+]
+[
+ObjTp=Sg
+H=10
+Nm=//__S__Source_In_Use*!
+]
+[
+ObjTp=Sg
 H=11
 Nm=[Initialized!]
 ]
@@ -6444,11 +6451,6 @@ Nm=__S__Output_Is_Audio
 ObjTp=Sg
 H=15
 Nm=__S__Output_Is_Audio/Video
-]
-[
-ObjTp=Sg
-H=16
-Nm=__S__Source_In_Use*!
 ]
 [
 ObjTp=Sg
@@ -6488,11 +6490,6 @@ ObjTp=Sg
 H=24
 Nm=__S__Connections#_Floor
 SgTp=2
-]
-[
-ObjTp=Sg
-H=28
-Nm=[Power_Off]
 ]
 [
 ObjTp=Sg
@@ -6540,11 +6537,6 @@ ObjTp=Sg
 H=45
 Nm=__S__Name$
 SgTp=4
-]
-[
-ObjTp=Sg
-H=57
-Nm=[Power_On]
 ]
 [
 ObjTp=Sg
@@ -8904,11 +8896,6 @@ SgTp=2
 ObjTp=Sg
 H=650
 Nm=__S__Initialized!
-]
-[
-ObjTp=Sg
-H=654
-Nm=__S__Source_In_Use!
 ]
 [
 ObjTp=Sg
